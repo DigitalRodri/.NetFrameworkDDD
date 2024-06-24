@@ -1,5 +1,4 @@
 using System.Data.Entity;
-using SqlProviderServices = System.Data.Entity.SqlServer.SqlProviderServices;
 
 namespace Application
 {
