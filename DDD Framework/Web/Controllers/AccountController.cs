@@ -9,13 +9,19 @@ namespace Web.Controllers
     [RoutePrefix("Account")]
     public class AccountController : ApiController
     {
+        private readonly IAccountService _accountService;
+
+        public AccountController(IAccountService accountService)
+        {
+            _accountService = accountService;
+        }
+
         [HttpGet]
         public HttpResponseMessage GetAccount([FromUri] string email)
         {
             try
             {
-                AccountService accountService = new AccountService();
-                Account account = accountService.GetAccount(email);
+                Account account = _accountService.GetAccount(email);
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK, account); 
             }
             catch (Exception ex)

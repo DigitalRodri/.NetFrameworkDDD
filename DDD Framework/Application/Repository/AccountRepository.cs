@@ -2,7 +2,7 @@
 
 namespace Application.Repository
 {
-    public class AccountRepository
+    public class AccountRepository : IAccountRepository
     {
         public Account GetAccount(string email)
         {
