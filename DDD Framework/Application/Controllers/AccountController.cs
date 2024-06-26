@@ -1,10 +1,10 @@
-﻿using Application;
-using Application.Service;
+﻿using Domain.DTOs;
+using Domain.Interfaces;
 using System;
 using System.Net.Http;
 using System.Web.Http;
 
-namespace Web.Controllers
+namespace Application.Controllers
 {
     [RoutePrefix("Account")]
     public class AccountController : ApiController
@@ -21,8 +21,8 @@ namespace Web.Controllers
         {
             try
             {
-                Account account = _accountService.GetAccount(email);
-                return Request.CreateResponse(System.Net.HttpStatusCode.OK, account); 
+                AccountDto accountDTO = _accountService.GetAccount(email);
+                return Request.CreateResponse(System.Net.HttpStatusCode.OK, accountDTO); 
             }
             catch (Exception ex)
             {

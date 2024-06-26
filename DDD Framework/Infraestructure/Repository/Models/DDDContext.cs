@@ -1,6 +1,7 @@
+using Domain.Entities;
 using System.Data.Entity;
 
-namespace Application
+namespace Infraestructure.Repository.Models
 {
     public partial class DDDContext : DbContext
     {

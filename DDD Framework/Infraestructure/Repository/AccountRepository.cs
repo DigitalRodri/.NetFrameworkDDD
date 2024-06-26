@@ -1,6 +1,9 @@
-﻿using System.Linq;
+﻿using Domain.Entities;
+using Domain.Interfaces;
+using Infraestructure.Repository.Models;
+using System.Linq;
 
-namespace Application.Repository
+namespace Infraestructure.Repository
 {
     public class AccountRepository : IAccountRepository
     {

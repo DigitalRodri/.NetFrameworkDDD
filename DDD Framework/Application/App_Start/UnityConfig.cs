@@ -1,10 +1,14 @@
-using Application.Repository;
-using Application.Service;
+using Application.App_Start;
+using AutoMapper;
+using Domain.Interfaces;
+using Domain.Services;
+using Infraestructure.Repository;
 using System.Web.Http;
 using Unity;
+using Unity.Injection;
 using Unity.WebApi;
 
-namespace Web
+namespace Application
 {
     public static class UnityConfig
     {
@@ -14,6 +18,11 @@ namespace Web
 
             container.RegisterType<IAccountService, AccountService>();
             container.RegisterType<IAccountRepository, AccountRepository>();
+
+            var mapperConfig = AutoMapperConfig.InitializeAutoMapper();
+            var mapper = mapperConfig.CreateMapper();
+
+            container.RegisterType<IMapper, Mapper>(new InjectionConstructor(mapperConfig));
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
