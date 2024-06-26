@@ -41,7 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTOs\AccountDto.cs" />
-    <Compile Include="Interfaces\Account.cs" />
+    <Compile Include="Entities\Account.cs" />
     <Compile Include="Interfaces\IAccountRepository.cs" />
     <Compile Include="Profiles\AccountProfile.cs" />
     <Compile Include="Services\AccountService.cs" />
@@ -54,8 +54,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

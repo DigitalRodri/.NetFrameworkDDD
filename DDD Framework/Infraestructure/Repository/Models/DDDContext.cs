@@ -11,28 +11,5 @@ namespace Infraestructure.Repository.Models
         }
 
         public virtual DbSet<Account> Accounts { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Account>()
-                .Property(e => e.Email)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Account>()
-                .Property(e => e.Password)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Account>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Account>()
-                .Property(e => e.Surname)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<Account>()
-                .Property(e => e.Title)
-                .IsUnicode(false);
-        }
     }
 }
