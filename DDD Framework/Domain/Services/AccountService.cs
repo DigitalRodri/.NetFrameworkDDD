@@ -19,7 +19,7 @@ namespace Domain.Services
 
         public AccountDto GetAccount(Guid UUID)
         {
-            if (UUID == null) throw new ArgumentNullException("UUID");
+            ValidateUUID(UUID);
 
             Account account = _accountRepository.GetAccount(UUID);
 
@@ -39,7 +39,7 @@ namespace Domain.Services
 
         public AccountDto UpdateAccount(Guid UUID, SimpleAccountDto simpleAccountDto)
         {
-            if (UUID == null) throw new ArgumentNullException("UUID");
+            ValidateUUID(UUID);
             ValidateSimpleAccountDto(simpleAccountDto);
             //HashPassword(simpleAccountDto);
 
@@ -51,7 +51,7 @@ namespace Domain.Services
 
         public void DeleteAccount(Guid UUID)
         {
-            if (UUID == null) throw new ArgumentNullException("UUID");
+            ValidateUUID(UUID);
 
             _accountRepository.DeleteAccount(UUID);
 
@@ -60,14 +60,24 @@ namespace Domain.Services
 
         #region Private methods
 
+        private void ValidateUUID(Guid UUID)
+        {
+            if (UUID == null) 
+                throw new ArgumentException(String.Format(Resources.Resources.NullParameter, nameof(UUID)));
+        }
+
         private void ValidateSimpleAccountDto(SimpleAccountDto simpleAccountDto)
         {
-            if (string.IsNullOrEmpty(simpleAccountDto.Email)) throw new ArgumentNullException("simpleAccountDto.Email");
-            if (string.IsNullOrEmpty(simpleAccountDto.Name)) throw new ArgumentNullException("simpleAccountDto.Name");
-            if (string.IsNullOrEmpty(simpleAccountDto.Surname)) throw new ArgumentNullException("simpleAccountDto.Surname");
-            if (string.IsNullOrEmpty(simpleAccountDto.Password)) throw new ArgumentNullException("simpleAccountDto.Password");
+            if (string.IsNullOrEmpty(simpleAccountDto.Email)) 
+                throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(simpleAccountDto.Email)));
+            if (string.IsNullOrEmpty(simpleAccountDto.Name)) 
+                throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(simpleAccountDto.Name)));
+            if (string.IsNullOrEmpty(simpleAccountDto.Surname)) 
+                throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(simpleAccountDto.Surname)));
+            if (string.IsNullOrEmpty(simpleAccountDto.Password)) 
+                throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(simpleAccountDto.Password)));
             if (!string.IsNullOrEmpty(simpleAccountDto.Title) && simpleAccountDto.Title.Length > 5)
-                throw new ArgumentException("simpleAccountDto.Title - Title can't be longer than 5 characters");
+                throw new ArgumentException(String.Format(Resources.Resources.TitleLengthError, simpleAccountDto.Title));
         }
         private void HashPassword(SimpleAccountDto simpleAccountDto)
         {

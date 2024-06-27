@@ -1,4 +1,7 @@
-﻿using System.Web.Http;
+﻿using System.Globalization;
+using System.Threading;
+using System.Web;
+using System.Web.Http;
 
 namespace Application
 {
@@ -8,9 +11,18 @@ namespace Application
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
             UnityConfig.RegisterComponents();
-            //var config = new MapperConfiguration(cfg => {
-            //    cfg.AddMaps("Infraestructure");
-            //});
+        }
+
+        protected void Application_BeginRequest()
+        {
+            string[] userLanguages = HttpContext.Current.Request.UserLanguages;
+
+            CultureInfo selectedLanguage = userLanguages?.Length > 0
+                ? new CultureInfo(userLanguages[0])
+                : CultureInfo.InvariantCulture;
+
+            Thread.CurrentThread.CurrentCulture = selectedLanguage;
+            Thread.CurrentThread.CurrentUICulture = selectedLanguage;
         }
     }
 }

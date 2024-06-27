@@ -1,5 +1,6 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
+using Domain.Resources;
 using Infraestructure.Repository.Models;
 using System;
 using System.Data;
@@ -24,7 +25,7 @@ namespace Infraestructure.Repository
             using (var db = new DDDContext())
             {
                 Account existingAccount = db.Accounts.Where(x => x.Email == email).FirstOrDefault();
-                if (existingAccount != null) throw new DuplicateNameException("Account with email: " + email + " already exists");
+                if (existingAccount != null) throw new DuplicateNameException(String.Format(Resources.AccountAlreadyExists, email));
 
                 Account result = db.Accounts.Add(newAccount);
                 db.SaveChanges();
