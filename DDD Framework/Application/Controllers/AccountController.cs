@@ -1,6 +1,7 @@
 ﻿using Domain.DTOs;
 using Domain.Interfaces;
 using System;
+using System.Data;
 using System.Net.Http;
 using System.Web.Http;
 
@@ -45,6 +46,10 @@ namespace Application.Controllers
             catch (ArgumentException ex)
             {
                 return Request.CreateErrorResponse(System.Net.HttpStatusCode.BadRequest, ex);
+            }
+            catch (DuplicateNameException ex)
+            {
+                return Request.CreateErrorResponse(System.Net.HttpStatusCode.Conflict, ex);
             }
             catch (Exception ex)
             {
