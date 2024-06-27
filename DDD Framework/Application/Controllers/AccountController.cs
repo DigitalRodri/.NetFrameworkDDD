@@ -1,8 +1,6 @@
 ﻿using Domain.DTOs;
 using Domain.Interfaces;
 using System;
-using System.Data.Entity.Validation;
-using System.Linq;
 using System.Net.Http;
 using System.Web.Http;
 

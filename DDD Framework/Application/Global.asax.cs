@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace Application
 {
