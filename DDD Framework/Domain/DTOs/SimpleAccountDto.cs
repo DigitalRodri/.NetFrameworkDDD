@@ -1,11 +1,7 @@
-﻿using System;
-
-namespace Domain.DTOs
+﻿namespace Domain.DTOs
 {
-    public class AccountDto
+    public class SimpleAccountDto
     {
-        public Guid UUID { get; set; }
-
         public string Email { get; set; }
 
         public string Name { get; set; }
@@ -13,5 +9,7 @@ namespace Domain.DTOs
         public string Surname { get; set; }
 
         public string Title { get; set; }
+
+        public string Password { get; set; }
     }
 }

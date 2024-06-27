@@ -8,11 +8,9 @@ namespace Domain.Entities
     public partial class Account
     {
         [Key]
-        [Column(Order = 0)]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid UUID { get; set; }
 
-        [Key]
-        [Column(Order = 1)]
         [StringLength(50)]
         public string Email { get; set; }
 
@@ -38,5 +36,18 @@ namespace Domain.Entities
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
         public DateTime UTCUpdatedDateTime { get; set; }
+
+        public Account()
+        {
+        }
+
+        public Account(string email, string password, string name, string surname, string title)
+        {
+            Email = email;
+            Password = password;
+            Name = name;
+            Surname = surname;
+            Title = title;
+        }
     }
 }
