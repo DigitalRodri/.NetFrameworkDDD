@@ -62,7 +62,7 @@ namespace Domain.Services
 
         private void ValidateUUID(Guid UUID)
         {
-            if (UUID == null) 
+            if (UUID == Guid.Empty) 
                 throw new ArgumentException(String.Format(Resources.Resources.NullParameter, nameof(UUID)));
         }
 

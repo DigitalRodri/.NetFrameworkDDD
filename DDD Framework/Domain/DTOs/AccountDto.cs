@@ -13,5 +13,18 @@ namespace Domain.DTOs
         public string Surname { get; set; }
 
         public string Title { get; set; }
+
+        public AccountDto()
+        {
+        }
+
+        public AccountDto(Guid UUID, string email, string name, string surname, string title)
+        {
+            this.UUID = UUID;
+            Email = email;
+            Name = name;
+            Surname = surname;
+            Title = title;
+        }
     }
 }
