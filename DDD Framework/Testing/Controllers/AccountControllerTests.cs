@@ -1,9 +1,7 @@
 using Application.Controllers;
-using AutoMapper;
 using Domain.DTOs;
 using Domain.Entities;
 using Domain.Interfaces;
-using Domain.Profiles;
 using Domain.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
@@ -11,6 +9,7 @@ using System;
 using System.Data;
 using System.Net;
 using System.Net.Http;
+using System.Web.Http;
 
 namespace Testing.Services
 {
@@ -27,8 +26,12 @@ namespace Testing.Services
         [TestInitialize]
         public void Init() 
         {
+
+
             _accountService = new Mock<IAccountService>();
             _accountController = new AccountController(_accountService.Object);
+            _accountController.Request = new HttpRequestMessage();
+            _accountController.Request.SetConfiguration(new HttpConfiguration());
 
             _id = Guid.NewGuid();
             _accountDto = GetAccountDto();
@@ -38,23 +41,34 @@ namespace Testing.Services
 
         #region GetAccount
 
-        //[TestMethod]
-        //public void GetAccount_Success()
-        //{
-        //    _accountRepository.Setup(x => x.GetAccount(It.IsAny<Guid>())).Returns(_account);
-        //    AccountDto result = _accountService.GetAccount(_id);
+        [TestMethod]
+        public void GetAccount_Success()
+        {
+            _accountService.Setup(x => x.GetAccount(It.IsAny<Guid>())).Returns(_accountDto);
+            HttpResponseMessage result = _accountController.GetAccount(_id);
 
-        //    Assert.AreEqual(_account, result);
-        //}
+            result.TryGetContentValue<AccountDto>(out AccountDto accountResult);
+            Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
+            Assert.AreEqual(_accountDto.UUID, accountResult.UUID);
+        }
 
-        //[TestMethod]
-        //public void GetAccount_ArgumentException()
-        //{
-        //    _accountService.Setup(x => x.GetAccount(It.IsAny<Guid>())).Throws(GetArgumentException());
-        //    HttpResponseMessage result = _accountController.GetAccount(_id);
+        [TestMethod]
+        public void GetAccount_ArgumentException()
+        {
+            _accountService.Setup(x => x.GetAccount(It.IsAny<Guid>())).Throws(GetArgumentException());
+            HttpResponseMessage result = _accountController.GetAccount(_id);
 
-        //    Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
-        //}
+            Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
+        }
+
+        [TestMethod]
+        public void GetAccount_Exception()
+        {
+            _accountService.Setup(x => x.GetAccount(It.IsAny<Guid>())).Throws(new Exception());
+            HttpResponseMessage result = _accountController.GetAccount(_id);
+
+            Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
+        }
 
         #endregion
 
