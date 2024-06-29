@@ -20,6 +20,7 @@ namespace Testing.Services
         private Guid _id;
         private AccountDto _accountDto;
         private SimpleAccountDto _simpleAccountDto;
+        private UpdateAccountDto _updateAccountDto;
 
         [TestInitialize]
         public void Init() 
@@ -34,6 +35,7 @@ namespace Testing.Services
             _id = Guid.NewGuid();
             _accountDto = GetAccountDto();
             _simpleAccountDto = GetSimpleAccountDto();
+            _updateAccountDto = GetUpdateAccountDto();
         }
 
         #region GetAccount
@@ -116,8 +118,8 @@ namespace Testing.Services
         [TestMethod]
         public void UpdateAccount_Success()
         {
-            _accountService.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<SimpleAccountDto>())).Returns(_accountDto);
-            HttpResponseMessage result = _accountController.UpdateAccount(_id, _simpleAccountDto);
+            _accountService.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<UpdateAccountDto>())).Returns(_accountDto);
+            HttpResponseMessage result = _accountController.UpdateAccount(_id, _updateAccountDto);
 
             result.TryGetContentValue<AccountDto>(out AccountDto accountResult);
             Assert.AreEqual(HttpStatusCode.OK, result.StatusCode);
@@ -127,8 +129,8 @@ namespace Testing.Services
         [TestMethod]
         public void UpdateAccount_ArgumentException()
         {
-            _accountService.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<SimpleAccountDto>())).Throws(GetArgumentException());
-            HttpResponseMessage result = _accountController.UpdateAccount(_id, _simpleAccountDto);
+            _accountService.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<UpdateAccountDto>())).Throws(GetArgumentException());
+            HttpResponseMessage result = _accountController.UpdateAccount(_id, _updateAccountDto);
 
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
         }
@@ -136,8 +138,8 @@ namespace Testing.Services
         [TestMethod]
         public void UpdateAccount_Exception()
         {
-            _accountService.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<SimpleAccountDto>())).Throws(new Exception());
-            HttpResponseMessage result = _accountController.UpdateAccount(_id, _simpleAccountDto);
+            _accountService.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<UpdateAccountDto>())).Throws(new Exception());
+            HttpResponseMessage result = _accountController.UpdateAccount(_id, _updateAccountDto);
 
             Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
         }
@@ -185,6 +187,11 @@ namespace Testing.Services
         private SimpleAccountDto GetSimpleAccountDto()
         {
             return new SimpleAccountDto("example@mail.com", "Password", "Name", "Surname", "Mr");
+        }
+
+        private UpdateAccountDto GetUpdateAccountDto()
+        {
+            return new UpdateAccountDto("example@mail.com", "Name", "Surname", "Mr");
         }
 
         private ArgumentException GetArgumentException()

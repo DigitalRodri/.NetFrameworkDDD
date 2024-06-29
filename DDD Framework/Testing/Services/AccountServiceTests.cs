@@ -17,10 +17,12 @@ namespace Testing.Services
         private IAccountService _accountService;
         private Mock<IAccountRepository> _accountRepository;
         private Guid _id;
+        private Guid _salt;
         private AccountDto _accountDto;
         private Account _account;
         private Account _nullAccount;
         private SimpleAccountDto _simpleAccountDto;
+        private UpdateAccountDto _updateAccountDto;
         private static IMapper _autoMapper;
 
         [ClassInitialize]
@@ -41,10 +43,12 @@ namespace Testing.Services
             _accountService = new AccountService(_accountRepository.Object, _autoMapper);
 
             _id = Guid.NewGuid();
+            _salt = Guid.NewGuid();
             _accountDto = GetAccountDto();
             _account = GetAccount();
             _nullAccount = null;
             _simpleAccountDto = GetSimpleAccountDto();
+            _updateAccountDto = GetUpdateAccountDto();
         }
 
         #region GetAccount
@@ -67,7 +71,7 @@ namespace Testing.Services
         public void CreateAccount_Success()
         {
             _accountRepository.Setup(x => x.FindAccountByEmail(It.IsAny<string>())).Returns(_nullAccount);
-            _accountRepository.Setup(x => x.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            _accountRepository.Setup(x => x.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Guid>()))
                 .Returns(_account);
             AccountDto result = _accountService.CreateAccount(_simpleAccountDto);
 
@@ -90,9 +94,9 @@ namespace Testing.Services
         [TestMethod]
         public void UpdateAccount_Success()
         {
-            _accountRepository.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
+            _accountRepository.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(_account);
-            AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
+            AccountDto result = _accountService.UpdateAccount(_id, _updateAccountDto);
 
             Assert.AreEqual(_accountDto.Name, result.Name);
             Assert.AreEqual(_accountDto.Surname, result.Surname);
@@ -131,7 +135,7 @@ namespace Testing.Services
         public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullEmail()
         {
             _simpleAccountDto.Email = "";
-            AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
+            AccountDto result = _accountService.CreateAccount(_simpleAccountDto);
         }
 
         [TestMethod]
@@ -139,7 +143,7 @@ namespace Testing.Services
         public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullName()
         {
             _simpleAccountDto.Name = "";
-            AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
+            AccountDto result = _accountService.CreateAccount(_simpleAccountDto);
         }
 
         [TestMethod]
@@ -147,7 +151,7 @@ namespace Testing.Services
         public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullSurname()
         {
             _simpleAccountDto.Surname = "";
-            AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
+            AccountDto result = _accountService.CreateAccount(_simpleAccountDto);
         }
 
         [TestMethod]
@@ -155,7 +159,7 @@ namespace Testing.Services
         public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullPassword()
         {
             _simpleAccountDto.Password = "";
-            AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
+            AccountDto result = _accountService.CreateAccount(_simpleAccountDto);
         }
 
         [TestMethod]
@@ -163,7 +167,43 @@ namespace Testing.Services
         public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullTitle()
         {
             _simpleAccountDto.Title = "MoreThan5Characters";
-            AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
+            AccountDto result = _accountService.CreateAccount(_simpleAccountDto);
+        }
+
+        #endregion
+
+        #region ValidateUpdateAccountDTO
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ValidateUpdateAccountDTO_Throws_ArgumentExceptionCausedByNullEmail()
+        {
+            _updateAccountDto.Email = "";
+            AccountDto result = _accountService.UpdateAccount(_id, _updateAccountDto);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ValidateUpdateAccountDTO_Throws_ArgumentExceptionCausedByNullName()
+        {
+            _updateAccountDto.Name = "";
+            AccountDto result = _accountService.UpdateAccount(_id, _updateAccountDto);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ValidateUpdateAccountDTO_Throws_ArgumentExceptionCausedByNullSurname()
+        {
+            _updateAccountDto.Surname = "";
+            AccountDto result = _accountService.UpdateAccount(_id, _updateAccountDto);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException))]
+        public void ValidateUpdateAccountDTO_Throws_ArgumentExceptionCausedByNullTitle()
+        {
+            _updateAccountDto.Title = "MoreThan5Characters";
+            AccountDto result = _accountService.UpdateAccount(_id, _updateAccountDto);
         }
 
         #endregion
@@ -172,7 +212,7 @@ namespace Testing.Services
 
         private Account GetAccount()
         {
-            return new Account(_id, "example@mail.com", "Password", "Name", "Surname", "Mr", DateTime.Now, DateTime.Now);
+            return new Account(_id, "example@mail.com", "Password", "Name", "Surname", "Mr", _salt, DateTime.Now, DateTime.Now);
         }
 
         private AccountDto GetAccountDto()
@@ -183,6 +223,11 @@ namespace Testing.Services
         private SimpleAccountDto GetSimpleAccountDto()
         {
             return new SimpleAccountDto("example@mail.com", "Password", "Name", "Surname", "Mr");
+        }
+
+        private UpdateAccountDto GetUpdateAccountDto()
+        {
+            return new UpdateAccountDto("example@mail.com", "Name", "Surname", "Mr");
         }
 
         #endregion

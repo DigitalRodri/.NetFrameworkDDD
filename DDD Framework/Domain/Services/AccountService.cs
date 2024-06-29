@@ -100,11 +100,6 @@ namespace Domain.Services
                 throw new ArgumentException(String.Format(Resources.Resources.TitleLengthError, updateAccountDto.Title));
         }
 
-        private void HashPassword(SimpleAccountDto simpleAccountDto)
-        {
-            throw new NotImplementedException();
-        }
-
         private static string GetStringHash(string password, Guid salt)
         {
             byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
