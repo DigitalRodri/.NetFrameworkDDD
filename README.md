@@ -8,11 +8,9 @@ Contains:
 * Dependency injection with Unity
 * Object mapping using Automapper
 * Language handling using Resources file
-* Automatic GUID and modification dates generation in SQL
-
-Pending:
-* JWT authentication
 * Password hashing
+* GUID and creation/modification dates generated directly in SQL
+* JWT Authentication with custom RequiresAuthorization tag
 * Unit testing
 
 Designed with Microsoft guidelines: 
