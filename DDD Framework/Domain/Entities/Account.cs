@@ -20,7 +20,7 @@ namespace Domain.Entities
 
         [Required]
         [Column(TypeName = "varchar")]
-        [StringLength(50)]
+        [StringLength(128)]
         public string Password { get; set; }
 
         [Required]
@@ -38,6 +38,10 @@ namespace Domain.Entities
         public string Title { get; set; }
 
         [Required]
+        [Column(TypeName = "uniqueidentifier")]
+        public Guid Salt { get; set; }
+
+        [Required]
         [Column(TypeName = "datetime2")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public DateTime UTCCreatedDateTime { get; set; }
@@ -51,7 +55,7 @@ namespace Domain.Entities
         {
         }
 
-        public Account(Guid UUID, string email, string password, string name, string surname, string title, DateTime uTCCreatedDateTime, DateTime uTCUpdatedDateTime)
+        public Account(Guid UUID, string email, string password, string name, string surname, string title, Guid salt, DateTime uTCCreatedDateTime, DateTime uTCUpdatedDateTime)
         {
             this.UUID = UUID;
             Email = email;
@@ -59,17 +63,19 @@ namespace Domain.Entities
             Name = name;
             Surname = surname;
             Title = title;
+            Salt = salt;
             UTCCreatedDateTime = uTCCreatedDateTime;
             UTCUpdatedDateTime = uTCUpdatedDateTime;
         }
 
-        public Account(string email, string password, string name, string surname, string title)
+        public Account(string email, string password, string name, string surname, string title, Guid salt)
         {
             Email = email;
             Password = password;
             Name = name;
             Surname = surname;
             Title = title;
+            Salt = salt;
         }
     }
 }

@@ -24,9 +24,9 @@ namespace Infraestructure.Repository
             }
         }
 
-        public Account CreateAccount(string email, string password, string name, string surname, string title)
+        public Account CreateAccount(string email, string password, string name, string surname, string title, Guid salt)
         {
-            Account newAccount = new Account(email, password, name, surname, title);
+            Account newAccount = new Account(email, password, name, surname, title, salt);
 
             using (var db = new DDDContext())
             {

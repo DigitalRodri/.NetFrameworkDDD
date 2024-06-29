@@ -4,6 +4,9 @@ using Domain.Entities;
 using Domain.Interfaces;
 using System;
 using System.Data;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace Domain.Services
 {
@@ -30,13 +33,15 @@ namespace Domain.Services
         public AccountDto CreateAccount(SimpleAccountDto simpleAccountDto)
         {
             ValidateSimpleAccountDto(simpleAccountDto);
-            //HashPassword(simpleAccountDto);
 
             Account existingAccount = _accountRepository.FindAccountByEmail(simpleAccountDto.Email);
             if (existingAccount != null) throw new DuplicateNameException(String.Format(Resources.Resources.AccountAlreadyExists, simpleAccountDto.Email));
 
+            Guid salt = Guid.NewGuid();
+            string hashedPassword = GetStringHash(simpleAccountDto.Password, salt);
+
             Account account = _accountRepository
-                .CreateAccount(simpleAccountDto.Email, simpleAccountDto.Password, simpleAccountDto.Name, simpleAccountDto.Surname, simpleAccountDto.Title);
+                .CreateAccount(simpleAccountDto.Email, hashedPassword, simpleAccountDto.Name, simpleAccountDto.Surname, simpleAccountDto.Title, salt);
 
             return _autoMapper.Map<AccountDto>(account);
         }
@@ -45,7 +50,6 @@ namespace Domain.Services
         {
             ValidateUUID(UUID);
             ValidateSimpleAccountDto(simpleAccountDto);
-            //HashPassword(simpleAccountDto);
 
             Account modifiedAccount = _accountRepository
                 .UpdateAccount(UUID, simpleAccountDto.Email, simpleAccountDto.Password, simpleAccountDto.Name, simpleAccountDto.Surname, simpleAccountDto.Title);
@@ -86,6 +90,21 @@ namespace Domain.Services
         private void HashPassword(SimpleAccountDto simpleAccountDto)
         {
             throw new NotImplementedException();
+        }
+
+        private static string GetStringHash(string password, Guid salt)
+        {
+            byte[] encodedPassword = Encoding.UTF8.GetBytes(password);
+            byte[] encodedSalt = Encoding.UTF8.GetBytes(salt.ToString());
+            byte[] saltedValue = encodedPassword.Concat(encodedSalt).ToArray();
+
+            byte[] hash = Hash(saltedValue);
+            return BitConverter.ToString(hash).Replace("-", "");
+        }
+
+        public static byte[] Hash(byte[] saltedValue)
+        {
+            return new SHA256Managed().ComputeHash(saltedValue);
         }
 
         #endregion
