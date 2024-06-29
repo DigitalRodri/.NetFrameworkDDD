@@ -51,6 +51,18 @@ namespace Domain.Entities
         {
         }
 
+        public Account(Guid UUID, string email, string password, string name, string surname, string title, DateTime uTCCreatedDateTime, DateTime uTCUpdatedDateTime)
+        {
+            this.UUID = UUID;
+            Email = email;
+            Password = password;
+            Name = name;
+            Surname = surname;
+            Title = title;
+            UTCCreatedDateTime = uTCCreatedDateTime;
+            UTCUpdatedDateTime = uTCUpdatedDateTime;
+        }
+
         public Account(string email, string password, string name, string surname, string title)
         {
             Email = email;

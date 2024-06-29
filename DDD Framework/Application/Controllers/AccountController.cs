@@ -23,6 +23,8 @@ namespace Application.Controllers
             try
             {
                 AccountDto accountDTO = _accountService.GetAccount(UUID);
+
+                if (accountDTO == null) return Request.CreateResponse(System.Net.HttpStatusCode.NoContent);
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK, accountDTO); 
             }
             catch (ArgumentException ex)

@@ -18,15 +18,20 @@ namespace Infraestructure.Repository
             }
         }
 
+        public Account FindAccountByEmail(string email)
+        {
+            using (var db = new DDDContext())
+            {
+                return db.Accounts.Where(x => x.Email == email).FirstOrDefault();
+            }
+        }
+
         public Account CreateAccount(string email, string password, string name, string surname, string title)
         {
             Account newAccount = new Account(email, password, name, surname, title);
 
             using (var db = new DDDContext())
             {
-                Account existingAccount = db.Accounts.Where(x => x.Email == email).FirstOrDefault();
-                if (existingAccount != null) throw new DuplicateNameException(String.Format(Resources.AccountAlreadyExists, email));
-
                 Account result = db.Accounts.Add(newAccount);
                 db.SaveChanges();
                 return result;

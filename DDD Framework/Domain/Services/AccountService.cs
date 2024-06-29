@@ -3,6 +3,7 @@ using Domain.DTOs;
 using Domain.Entities;
 using Domain.Interfaces;
 using System;
+using System.Data;
 
 namespace Domain.Services
 {
@@ -30,6 +31,9 @@ namespace Domain.Services
         {
             ValidateSimpleAccountDto(simpleAccountDto);
             //HashPassword(simpleAccountDto);
+
+            Account existingAccount = _accountRepository.FindAccountByEmail(simpleAccountDto.Email);
+            if (existingAccount != null) throw new DuplicateNameException(String.Format(Resources.Resources.AccountAlreadyExists, simpleAccountDto.Email));
 
             Account account = _accountRepository
                 .CreateAccount(simpleAccountDto.Email, simpleAccountDto.Password, simpleAccountDto.Name, simpleAccountDto.Surname, simpleAccountDto.Title);

@@ -20,7 +20,6 @@ namespace Testing.Services
         private Mock<IAccountService> _accountService;
         private Guid _id;
         private AccountDto _accountDto;
-        private Account _account;
         private SimpleAccountDto _simpleAccountDto;
 
         [TestInitialize]
@@ -35,7 +34,6 @@ namespace Testing.Services
 
             _id = Guid.NewGuid();
             _accountDto = GetAccountDto();
-            _account = GetAccount();
             _simpleAccountDto = GetSimpleAccountDto();
         }
 
@@ -179,11 +177,6 @@ namespace Testing.Services
         #endregion
 
         #region Constructors
-
-        private Account GetAccount()
-        {
-            return new Account("example@mail.com", "Password", "Name", "Surname", "Mr");
-        }
 
         private AccountDto GetAccountDto() 
         {

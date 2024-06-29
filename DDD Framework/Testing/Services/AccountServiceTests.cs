@@ -7,6 +7,7 @@ using Domain.Services;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
+using System.Data;
 
 namespace Testing.Services
 {
@@ -18,6 +19,7 @@ namespace Testing.Services
         private Guid _id;
         private AccountDto _accountDto;
         private Account _account;
+        private Account _nullAccount;
         private SimpleAccountDto _simpleAccountDto;
         private static IMapper _autoMapper;
 
@@ -41,6 +43,7 @@ namespace Testing.Services
             _id = Guid.NewGuid();
             _accountDto = GetAccountDto();
             _account = GetAccount();
+            _nullAccount = null;
             _simpleAccountDto = GetSimpleAccountDto();
         }
 
@@ -63,12 +66,21 @@ namespace Testing.Services
         [TestMethod]
         public void CreateAccount_Success()
         {
+            _accountRepository.Setup(x => x.FindAccountByEmail(It.IsAny<string>())).Returns(_nullAccount);
             _accountRepository.Setup(x => x.CreateAccount(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()))
                 .Returns(_account);
             AccountDto result = _accountService.CreateAccount(_simpleAccountDto);
 
             Assert.AreEqual(_accountDto.Name, result.Name);
             Assert.AreEqual(_accountDto.Surname, result.Surname);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DuplicateNameException))]
+        public void CreateAccount_Throws_DuplicateNameExceptionCausedByExistingAccount()
+        {
+            _accountRepository.Setup(x => x.FindAccountByEmail(It.IsAny<string>())).Returns(_account);
+            AccountDto result = _accountService.CreateAccount(_simpleAccountDto);
         }
 
         #endregion
@@ -105,7 +117,7 @@ namespace Testing.Services
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void GetAccount_ArgumentException()
+        public void GetAccount_Throws_ArgumentExceptionCausedByEmptyGuid()
         {
             AccountDto result = _accountService.GetAccount(Guid.Empty);
         }
@@ -116,7 +128,7 @@ namespace Testing.Services
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ValidateSimpleAccountDto_ArgumentException_Email()
+        public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullEmail()
         {
             _simpleAccountDto.Email = "";
             AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
@@ -124,7 +136,7 @@ namespace Testing.Services
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ValidateSimpleAccountDto_ArgumentException_Name()
+        public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullName()
         {
             _simpleAccountDto.Name = "";
             AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
@@ -132,7 +144,7 @@ namespace Testing.Services
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ValidateSimpleAccountDto_ArgumentException_Surname()
+        public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullSurname()
         {
             _simpleAccountDto.Surname = "";
             AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
@@ -140,7 +152,7 @@ namespace Testing.Services
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ValidateSimpleAccountDto_ArgumentException_Password()
+        public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullPassword()
         {
             _simpleAccountDto.Password = "";
             AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
@@ -148,7 +160,7 @@ namespace Testing.Services
 
         [TestMethod]
         [ExpectedException(typeof(ArgumentException))]
-        public void ValidateSimpleAccountDto_ArgumentException_Title()
+        public void ValidateSimpleAccountDto_Throws_ArgumentExceptionCausedByNullTitle()
         {
             _simpleAccountDto.Title = "MoreThan5Characters";
             AccountDto result = _accountService.UpdateAccount(_id, _simpleAccountDto);
@@ -160,7 +172,7 @@ namespace Testing.Services
 
         private Account GetAccount()
         {
-            return new Account("example@mail.com", "Password", "Name", "Surname", "Mr");
+            return new Account(_id, "example@mail.com", "Password", "Name", "Surname", "Mr", DateTime.Now, DateTime.Now);
         }
 
         private AccountDto GetAccountDto()
