@@ -36,14 +36,13 @@ namespace Infraestructure.Repository
             }
         }
 
-        public Account UpdateAccount(Guid UUID, string email, string password, string name, string surname, string title)
+        public Account UpdateAccount(Guid UUID, string email, string name, string surname, string title)
         {
             using (var db = new DDDContext())
             {
                 Account modifiedAccount = db.Accounts.Find(UUID);
 
                 modifiedAccount.Email = email;
-                modifiedAccount.Password = password;
                 modifiedAccount.Name = name;
                 modifiedAccount.Surname = surname;
                 modifiedAccount.Title = title;

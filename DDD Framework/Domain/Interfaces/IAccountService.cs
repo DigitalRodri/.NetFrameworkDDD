@@ -7,7 +7,7 @@ namespace Domain.Interfaces
     {
         AccountDto GetAccount(Guid UUID);
         AccountDto CreateAccount(SimpleAccountDto simpleAccountDto);
-        AccountDto UpdateAccount(Guid UUID, SimpleAccountDto simpleAccountDto);
+        AccountDto UpdateAccount(Guid UUID, UpdateAccountDto updateAccountDto);
         void DeleteAccount(Guid UUID);
     }
 }

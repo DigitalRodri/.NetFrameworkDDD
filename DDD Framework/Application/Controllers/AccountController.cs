@@ -62,11 +62,11 @@ namespace Application.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateAccount([FromUri] Guid UUID, SimpleAccountDto simpleAccountDto)
+        public HttpResponseMessage UpdateAccount([FromUri] Guid UUID, UpdateAccountDto updateAccountDto)
         {
             try
             {
-                AccountDto modifiedAccount = _accountService.UpdateAccount(UUID, simpleAccountDto);
+                AccountDto modifiedAccount = _accountService.UpdateAccount(UUID, updateAccountDto);
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK, modifiedAccount);
             }
             catch (ArgumentException ex)

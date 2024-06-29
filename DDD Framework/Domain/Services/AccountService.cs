@@ -46,13 +46,13 @@ namespace Domain.Services
             return _autoMapper.Map<AccountDto>(account);
         }
 
-        public AccountDto UpdateAccount(Guid UUID, SimpleAccountDto simpleAccountDto)
+        public AccountDto UpdateAccount(Guid UUID, UpdateAccountDto updateAccountDto)
         {
             ValidateUUID(UUID);
-            ValidateSimpleAccountDto(simpleAccountDto);
+            ValidateUpdateAccountDto(updateAccountDto);
 
             Account modifiedAccount = _accountRepository
-                .UpdateAccount(UUID, simpleAccountDto.Email, simpleAccountDto.Password, simpleAccountDto.Name, simpleAccountDto.Surname, simpleAccountDto.Title);
+                .UpdateAccount(UUID, updateAccountDto.Email, updateAccountDto.Name, updateAccountDto.Surname, updateAccountDto.Title);
 
             return _autoMapper.Map<AccountDto>(modifiedAccount);
         }
@@ -87,6 +87,19 @@ namespace Domain.Services
             if (!string.IsNullOrEmpty(simpleAccountDto.Title) && simpleAccountDto.Title.Length > 5)
                 throw new ArgumentException(String.Format(Resources.Resources.TitleLengthError, simpleAccountDto.Title));
         }
+
+        private void ValidateUpdateAccountDto(UpdateAccountDto updateAccountDto)
+        {
+            if (string.IsNullOrEmpty(updateAccountDto.Email))
+                throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(updateAccountDto.Email)));
+            if (string.IsNullOrEmpty(updateAccountDto.Name))
+                throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(updateAccountDto.Name)));
+            if (string.IsNullOrEmpty(updateAccountDto.Surname))
+                throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(updateAccountDto.Surname)));
+            if (!string.IsNullOrEmpty(updateAccountDto.Title) && updateAccountDto.Title.Length > 5)
+                throw new ArgumentException(String.Format(Resources.Resources.TitleLengthError, updateAccountDto.Title));
+        }
+
         private void HashPassword(SimpleAccountDto simpleAccountDto)
         {
             throw new NotImplementedException();

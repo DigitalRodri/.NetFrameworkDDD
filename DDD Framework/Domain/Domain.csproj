@@ -40,6 +40,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DTOs\UpdateAccountDto.cs" />
     <Compile Include="DTOs\SimpleAccountDto.cs" />
     <Compile Include="DTOs\AccountDto.cs" />
     <Compile Include="Entities\Account.cs" />
