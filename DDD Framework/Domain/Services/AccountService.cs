@@ -68,13 +68,13 @@ namespace Domain.Services
 
         #region Private methods
 
-        private void ValidateUUID(Guid UUID)
+        private static void ValidateUUID(Guid UUID)
         {
             if (UUID == Guid.Empty) 
                 throw new ArgumentException(String.Format(Resources.Resources.NullParameter, nameof(UUID)));
         }
 
-        private void ValidateSimpleAccountDto(SimpleAccountDto simpleAccountDto)
+        private static void ValidateSimpleAccountDto(SimpleAccountDto simpleAccountDto)
         {
             if (string.IsNullOrEmpty(simpleAccountDto.Email)) 
                 throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(simpleAccountDto.Email)));
@@ -88,7 +88,7 @@ namespace Domain.Services
                 throw new ArgumentException(String.Format(Resources.Resources.TitleLengthError, simpleAccountDto.Title));
         }
 
-        private void ValidateUpdateAccountDto(UpdateAccountDto updateAccountDto)
+        private static void ValidateUpdateAccountDto(UpdateAccountDto updateAccountDto)
         {
             if (string.IsNullOrEmpty(updateAccountDto.Email))
                 throw new ArgumentException(String.Format(Resources.Resources.NullOrEmptyParameter, nameof(updateAccountDto.Email)));
@@ -110,7 +110,7 @@ namespace Domain.Services
             return BitConverter.ToString(hash).Replace("-", "");
         }
 
-        public static byte[] Hash(byte[] saltedValue)
+        private static byte[] Hash(byte[] saltedValue)
         {
             return new SHA256Managed().ComputeHash(saltedValue);
         }

@@ -1,7 +1,6 @@
 using Application.Controllers;
 using Domain.DTOs;
 using Domain.Interfaces;
-using Domain.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
@@ -9,6 +8,7 @@ using System.Data;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Testing.Helpers;
 
 namespace Testing.Services
 {
@@ -17,10 +17,13 @@ namespace Testing.Services
     {
         private AccountController _accountController;
         private Mock<IAccountService> _accountService;
+
         private Guid _id;
         private AccountDto _accountDto;
         private SimpleAccountDto _simpleAccountDto;
         private UpdateAccountDto _updateAccountDto;
+        private ArgumentException _argumentException;
+        private DuplicateNameException _duplicateNameException;
 
         [TestInitialize]
         public void Init() 
@@ -33,9 +36,11 @@ namespace Testing.Services
             _accountController.Request.SetConfiguration(new HttpConfiguration());
 
             _id = Guid.NewGuid();
-            _accountDto = GetAccountDto();
-            _simpleAccountDto = GetSimpleAccountDto();
-            _updateAccountDto = GetUpdateAccountDto();
+            _accountDto = ObjectHelper.GetAccountDto();
+            _simpleAccountDto = ObjectHelper.GetSimpleAccountDto();
+            _updateAccountDto = ObjectHelper.GetUpdateAccountDto();
+            _argumentException = ObjectHelper.GetArgumentException();
+            _duplicateNameException = ObjectHelper.GetDuplicateNameException();
         }
 
         #region GetAccount
@@ -54,7 +59,7 @@ namespace Testing.Services
         [TestMethod]
         public void GetAccount_ArgumentException()
         {
-            _accountService.Setup(x => x.GetAccount(It.IsAny<Guid>())).Throws(GetArgumentException());
+            _accountService.Setup(x => x.GetAccount(It.IsAny<Guid>())).Throws(_argumentException);
             HttpResponseMessage result = _accountController.GetAccount(_id);
 
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
@@ -87,7 +92,7 @@ namespace Testing.Services
         [TestMethod]
         public void CreateAccount_ArgumentException()
         {
-            _accountService.Setup(x => x.CreateAccount(It.IsAny<SimpleAccountDto>())).Throws(GetArgumentException());
+            _accountService.Setup(x => x.CreateAccount(It.IsAny<SimpleAccountDto>())).Throws(_argumentException);
             HttpResponseMessage result = _accountController.CreateAccount(_simpleAccountDto);
 
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
@@ -96,7 +101,7 @@ namespace Testing.Services
         [TestMethod]
         public void CreateAccount_DuplicateNameException()
         {
-            _accountService.Setup(x => x.CreateAccount(It.IsAny<SimpleAccountDto>())).Throws(GetDuplicateNameException());
+            _accountService.Setup(x => x.CreateAccount(It.IsAny<SimpleAccountDto>())).Throws(_duplicateNameException);
             HttpResponseMessage result = _accountController.CreateAccount(_simpleAccountDto);
 
             Assert.AreEqual(HttpStatusCode.Conflict, result.StatusCode);
@@ -129,7 +134,7 @@ namespace Testing.Services
         [TestMethod]
         public void UpdateAccount_ArgumentException()
         {
-            _accountService.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<UpdateAccountDto>())).Throws(GetArgumentException());
+            _accountService.Setup(x => x.UpdateAccount(It.IsAny<Guid>(), It.IsAny<UpdateAccountDto>())).Throws(_argumentException);
             HttpResponseMessage result = _accountController.UpdateAccount(_id, _updateAccountDto);
 
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
@@ -160,7 +165,7 @@ namespace Testing.Services
         [TestMethod]
         public void DeleteAccount_ArgumentException()
         {
-            _accountService.Setup(x => x.DeleteAccount(It.IsAny<Guid>())).Throws(GetArgumentException());
+            _accountService.Setup(x => x.DeleteAccount(It.IsAny<Guid>())).Throws(_argumentException);
             HttpResponseMessage result = _accountController.DeleteAccount(_id);
 
             Assert.AreEqual(HttpStatusCode.BadRequest, result.StatusCode);
@@ -173,35 +178,6 @@ namespace Testing.Services
             HttpResponseMessage result = _accountController.DeleteAccount(_id);
 
             Assert.AreEqual(HttpStatusCode.InternalServerError, result.StatusCode);
-        }
-
-        #endregion
-
-        #region Constructors
-
-        private AccountDto GetAccountDto() 
-        {
-            return new AccountDto(_id, "example@mail.com", "Name", "Surname", "Mr");
-        }
-
-        private SimpleAccountDto GetSimpleAccountDto()
-        {
-            return new SimpleAccountDto("example@mail.com", "Password", "Name", "Surname", "Mr");
-        }
-
-        private UpdateAccountDto GetUpdateAccountDto()
-        {
-            return new UpdateAccountDto("example@mail.com", "Name", "Surname", "Mr");
-        }
-
-        private ArgumentException GetArgumentException()
-        {
-            return new ArgumentException(String.Format(Resources.NullOrEmptyParameter, "GUID"));
-        }
-
-        private DuplicateNameException GetDuplicateNameException()
-        {
-            return new DuplicateNameException(String.Format(Resources.AccountAlreadyExists, "example@mail.com"));
         }
 
         #endregion

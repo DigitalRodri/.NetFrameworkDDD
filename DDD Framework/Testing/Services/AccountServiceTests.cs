@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Data;
+using Testing.Helpers;
 
 namespace Testing.Services
 {
@@ -16,6 +17,8 @@ namespace Testing.Services
     {
         private IAccountService _accountService;
         private Mock<IAccountRepository> _accountRepository;
+        private static IMapper _autoMapper;
+
         private Guid _id;
         private Guid _salt;
         private AccountDto _accountDto;
@@ -23,7 +26,6 @@ namespace Testing.Services
         private Account _nullAccount;
         private SimpleAccountDto _simpleAccountDto;
         private UpdateAccountDto _updateAccountDto;
-        private static IMapper _autoMapper;
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext testContext)
@@ -44,11 +46,11 @@ namespace Testing.Services
 
             _id = Guid.NewGuid();
             _salt = Guid.NewGuid();
-            _accountDto = GetAccountDto();
-            _account = GetAccount();
+            _accountDto = ObjectHelper.GetAccountDto();
+            _account = ObjectHelper.GetAccount();
             _nullAccount = null;
-            _simpleAccountDto = GetSimpleAccountDto();
-            _updateAccountDto = GetUpdateAccountDto();
+            _simpleAccountDto = ObjectHelper.GetSimpleAccountDto();
+            _updateAccountDto = ObjectHelper.GetUpdateAccountDto();
         }
 
         #region GetAccount
@@ -208,28 +210,5 @@ namespace Testing.Services
 
         #endregion
 
-        #region Constructors
-
-        private Account GetAccount()
-        {
-            return new Account(_id, "example@mail.com", "Password", "Name", "Surname", "Mr", _salt, DateTime.Now, DateTime.Now);
-        }
-
-        private AccountDto GetAccountDto()
-        {
-            return new AccountDto(_id, "example@mail.com", "Name", "Surname", "Mr");
-        }
-
-        private SimpleAccountDto GetSimpleAccountDto()
-        {
-            return new SimpleAccountDto("example@mail.com", "Password", "Name", "Surname", "Mr");
-        }
-
-        private UpdateAccountDto GetUpdateAccountDto()
-        {
-            return new UpdateAccountDto("example@mail.com", "Name", "Surname", "Mr");
-        }
-
-        #endregion
     }
 }
