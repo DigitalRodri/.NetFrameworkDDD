@@ -8,6 +8,7 @@ using System.Web.Http;
 
 namespace Application.Controllers
 {
+    [RequiresAuthorization]
     [RoutePrefix("Account")]
     public class AccountController : ApiController
     {
@@ -19,7 +20,6 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        [RequiresAuthorization]
         public HttpResponseMessage GetAccount([FromUri] Guid UUID)
         {
             try
