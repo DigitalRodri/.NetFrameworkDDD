@@ -20,7 +20,7 @@ namespace Application
             container.RegisterType<IAccountRepository, AccountRepository>();
 
             var mapperConfig = AutoMapperConfig.InitializeAutoMapper();
-            var mapper = mapperConfig.CreateMapper();
+            IMapper mapper = mapperConfig.CreateMapper();
 
             container.RegisterType<IMapper, Mapper>(new InjectionConstructor(mapperConfig));
 

@@ -15,6 +15,8 @@ namespace Application
 
         protected void Application_BeginRequest()
         {
+            // Select the first language out of the ones available and set that as Culture
+            // Reads Accept-Language header
             string[] userLanguages = HttpContext.Current.Request.UserLanguages;
 
             CultureInfo selectedLanguage = userLanguages?.Length > 0

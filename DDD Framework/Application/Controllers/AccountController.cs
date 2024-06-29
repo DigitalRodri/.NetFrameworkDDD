@@ -1,4 +1,5 @@
-﻿using Domain.DTOs;
+﻿using Application.Tags;
+using Domain.DTOs;
 using Domain.Interfaces;
 using System;
 using System.Data;
@@ -18,6 +19,7 @@ namespace Application.Controllers
         }
 
         [HttpGet]
+        [RequiresAuthorization]
         public HttpResponseMessage GetAccount([FromUri] Guid UUID)
         {
             try
