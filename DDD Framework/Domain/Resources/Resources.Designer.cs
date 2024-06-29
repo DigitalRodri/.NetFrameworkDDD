@@ -70,6 +70,15 @@ namespace Domain.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The request must contain an Authorization JWT Bearer Token.
+        /// </summary>
+        public static string NoAuthorization {
+            get {
+                return ResourceManager.GetString("NoAuthorization", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The parameter &apos;{0}&apos; is null or empty.
         /// </summary>
         public static string NullOrEmptyParameter {

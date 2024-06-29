@@ -1,6 +1,8 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Domain.Resources;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Web.Configuration;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
@@ -10,27 +12,40 @@ namespace Application.Tags
     {
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
-            string secretKey = "qwertyuiopasdfghjklzxcvbnm123456";
-            string jwtToken = actionContext.Request.Headers.Authorization.Parameter;
-            var token = new JwtSecurityToken(jwtToken);
+            // Validate the Authorization header Bearer jwt token using the Key and Issuer values
+            if (actionContext.Request.Headers.Authorization == null)
+                throw new ArgumentException(Resources.NoAuthorization, "Request.Headers.Authorization");
 
+            string jwtToken = actionContext.Request.Headers.Authorization.Parameter;
             var tokenHandler = new JwtSecurityTokenHandler();
-            var validationParameters = new TokenValidationParameters
+
+            try
+            {
+                tokenHandler.ValidateToken(jwtToken, GetTokenValidationParameters(), out SecurityToken validatedToken);
+            }
+            catch (SecurityTokenValidationException)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        protected private TokenValidationParameters GetTokenValidationParameters()
+        {
+            string issuerSigningKey = WebConfigurationManager.AppSettings["IssuerSigningKey"];
+            string validIssuer = WebConfigurationManager.AppSettings["ValidIssuer"];
+
+            return new TokenValidationParameters
             {
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(secretKey)),
+                IssuerSigningKey = new SymmetricSecurityKey(System.Text.Encoding.ASCII.GetBytes(issuerSigningKey)),
                 ValidateIssuer = true,
-                ValidIssuer = "Online JWT Builder",
-                ValidateAudience = true,
-                ValidAudience = "www.example.com",
+                ValidIssuer = validIssuer,
+                ValidateAudience = false,
                 ValidateLifetime = true,
                 ClockSkew = TimeSpan.Zero
             };
-
-            SecurityToken validatedToken;
-            var principal = tokenHandler.ValidateToken(jwtToken, validationParameters, out validatedToken);
-
-            return true;
         }
     }
 }

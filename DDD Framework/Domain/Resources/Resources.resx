@@ -129,4 +129,7 @@
   <data name="TitleLengthError" xml:space="preserve">
     <value>The Title '{0}' must have 5 characters or less</value>
   </data>
+  <data name="NoAuthorization" xml:space="preserve">
+    <value>The request must contain an Authorization JWT Bearer Token</value>
+  </data>
 </root>

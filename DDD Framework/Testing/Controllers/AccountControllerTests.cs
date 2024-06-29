@@ -1,6 +1,5 @@
 using Application.Controllers;
 using Domain.DTOs;
-using Domain.Entities;
 using Domain.Interfaces;
 using Domain.Resources;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,9 +1,7 @@
 ﻿using Domain.Entities;
 using Domain.Interfaces;
-using Domain.Resources;
 using Infraestructure.Repository.Models;
 using System;
-using System.Data;
 using System.Linq;
 
 namespace Infraestructure.Repository
