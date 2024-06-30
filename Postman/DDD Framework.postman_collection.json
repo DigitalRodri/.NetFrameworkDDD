@@ -8,13 +8,17 @@
 	"item": [
 		{
 			"name": "Account",
+			"protocolProfileBehavior": {
+				"strictSSL": false
+			},
 			"request": {
 				"method": "GET",
 				"header": [
 					{
 						"key": "Accept-Language",
 						"value": "es-ES",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					},
 					{
 						"key": "Authorization",
@@ -23,7 +27,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://localhost:44342/api/Account?UUID=b36536e4-125f-42ff-8183-20be461a873e",
+					"raw": "https://localhost:44342/api/account/b36536e4-125f-42ff-8183-20be461a873e",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -31,13 +35,8 @@
 					"port": "44342",
 					"path": [
 						"api",
-						"Account"
-					],
-					"query": [
-						{
-							"key": "UUID",
-							"value": "b36536e4-125f-42ff-8183-20be461a873e"
-						}
+						"account",
+						"b36536e4-125f-42ff-8183-20be461a873e"
 					]
 				}
 			},
@@ -51,7 +50,8 @@
 					{
 						"key": "Accept-Language",
 						"value": "en-US",
-						"type": "text"
+						"type": "text",
+						"disabled": true
 					},
 					{
 						"key": "Authorization",
@@ -61,7 +61,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"Email\": \"mail@mail.com\",\r\n    \"Name\": \"Name\",\r\n    \"Surname\": \"Surname\",\r\n    \"Title\": \"Mr\",\r\n    \"Password\": \"YourPassword123\"\r\n}",
+					"raw": "{\r\n    \"Email\": \"mail5@mail.com\",\r\n    \"Name\": \"Name\",\r\n    \"Surname\": \"Surname\",\r\n    \"Title\": \"Mr\",\r\n    \"Password\": \"YourPassword123\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -109,7 +109,7 @@
 					}
 				},
 				"url": {
-					"raw": "https://localhost:44342/api/Account?UUID=55bf8904-3b8d-4b17-82b0-85e91e23c0f2",
+					"raw": "https://localhost:44342/api/account/55bf8904-3b8d-4b17-82b0-85e91e23c0f2",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -117,13 +117,8 @@
 					"port": "44342",
 					"path": [
 						"api",
-						"Account"
-					],
-					"query": [
-						{
-							"key": "UUID",
-							"value": "55bf8904-3b8d-4b17-82b0-85e91e23c0f2"
-						}
+						"account",
+						"55bf8904-3b8d-4b17-82b0-85e91e23c0f2"
 					]
 				}
 			},
@@ -146,7 +141,7 @@
 					}
 				],
 				"url": {
-					"raw": "https://localhost:44342/api/Account?UUID=55bf8904-3b8d-4b17-82b0-85e91e23c0f2",
+					"raw": "https://localhost:44342/api/account/55bf8904-3b8d-4b17-82b0-85e91e23c0f2",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -154,13 +149,8 @@
 					"port": "44342",
 					"path": [
 						"api",
-						"Account"
-					],
-					"query": [
-						{
-							"key": "UUID",
-							"value": "55bf8904-3b8d-4b17-82b0-85e91e23c0f2"
-						}
+						"account",
+						"55bf8904-3b8d-4b17-82b0-85e91e23c0f2"
 					]
 				}
 			},
