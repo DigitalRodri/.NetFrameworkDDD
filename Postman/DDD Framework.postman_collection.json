@@ -1,0 +1,170 @@
+{
+	"info": {
+		"_postman_id": "a1883318-4453-42e1-8611-3995771a0964",
+		"name": "DDD Framework",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "36602723"
+	},
+	"item": [
+		{
+			"name": "Account",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "es-ES",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJSb2RyaWdvIEVzY3JpYmFubyIsImlhdCI6MTcxOTY4Njc4OSwiZXhwIjoxNzUxMjIyNzg5LCJhdWQiOiIiLCJzdWIiOiIifQ.oumBZYHRbwuh9gqtac8DeV-Crr4z65clhkBQ1kWqScA",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44342/api/Account?UUID=b36536e4-125f-42ff-8183-20be461a873e",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44342",
+					"path": [
+						"api",
+						"Account"
+					],
+					"query": [
+						{
+							"key": "UUID",
+							"value": "b36536e4-125f-42ff-8183-20be461a873e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "en-US",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJSb2RyaWdvIEVzY3JpYmFubyIsImlhdCI6MTcxOTY4Njc4OSwiZXhwIjoxNzUxMjIyNzg5LCJhdWQiOiIiLCJzdWIiOiIifQ.oumBZYHRbwuh9gqtac8DeV-Crr4z65clhkBQ1kWqScA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Email\": \"mail@mail.com\",\r\n    \"Name\": \"Name\",\r\n    \"Surname\": \"Surname\",\r\n    \"Title\": \"Mr\",\r\n    \"Password\": \"YourPassword123\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44342/api/Account",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44342",
+					"path": [
+						"api",
+						"Account"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept-Language",
+						"value": "es-ES",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJSb2RyaWdvIEVzY3JpYmFubyIsImlhdCI6MTcxOTY4Njc4OSwiZXhwIjoxNzUxMjIyNzg5LCJhdWQiOiIiLCJzdWIiOiIifQ.oumBZYHRbwuh9gqtac8DeV-Crr4z65clhkBQ1kWqScA",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Email\": \"mail2@mail.com\",\r\n    \"Name\": \"Changed\",\r\n    \"Surname\": \"Changed\",\r\n    \"Title\": \"Mrs\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44342/api/Account?UUID=55bf8904-3b8d-4b17-82b0-85e91e23c0f2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44342",
+					"path": [
+						"api",
+						"Account"
+					],
+					"query": [
+						{
+							"key": "UUID",
+							"value": "55bf8904-3b8d-4b17-82b0-85e91e23c0f2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Account",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJSb2RyaWdvIEVzY3JpYmFubyIsImlhdCI6MTcxOTY4Njc4OSwiZXhwIjoxNzUxMjIyNzg5LCJhdWQiOiIiLCJzdWIiOiIifQ.oumBZYHRbwuh9gqtac8DeV-Crr4z65clhkBQ1kWqScA",
+						"type": "text"
+					},
+					{
+						"key": "Accept-Language",
+						"value": "es-ES",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "https://localhost:44342/api/Account?UUID=55bf8904-3b8d-4b17-82b0-85e91e23c0f2",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44342",
+					"path": [
+						"api",
+						"Account"
+					],
+					"query": [
+						{
+							"key": "UUID",
+							"value": "55bf8904-3b8d-4b17-82b0-85e91e23c0f2"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
