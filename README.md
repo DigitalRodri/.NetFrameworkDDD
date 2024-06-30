@@ -1,7 +1,8 @@
 # .NetFrameworkDDD
 DDD Project based on .Net Framework 4.8.1
 
-*Run using IIS Express and Application as Startup Project*
+*Run using IIS Express and Application as Startup Project. Set Application project Start Action as "Don't open a page."*
+*Postman collection available in Postman folder.*
 
 Contains:
 * Basic CRUD operations using Entity Framework 6
