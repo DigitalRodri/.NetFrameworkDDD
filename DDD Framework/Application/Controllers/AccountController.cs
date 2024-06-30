@@ -9,7 +9,7 @@ using System.Web.Http;
 namespace Application.Controllers
 {
     [RequiresAuthorization]
-    [RoutePrefix("Account")]
+    [RoutePrefix("api/account")]
     public class AccountController : ApiController
     {
         private readonly IAccountService _accountService;
@@ -20,7 +20,8 @@ namespace Application.Controllers
         }
 
         [HttpGet]
-        public HttpResponseMessage GetAccount([FromUri] Guid UUID)
+        [Route("{UUID:Guid}")]
+        public HttpResponseMessage GetAccount(Guid UUID)
         {
             try
             {
@@ -40,6 +41,7 @@ namespace Application.Controllers
         }
 
         [HttpPost]
+        [Route("")]
         public HttpResponseMessage CreateAccount(SimpleAccountDto simpleAccountDto)
         {
             try
@@ -62,7 +64,8 @@ namespace Application.Controllers
         }
 
         [HttpPut]
-        public HttpResponseMessage UpdateAccount([FromUri] Guid UUID, UpdateAccountDto updateAccountDto)
+        [Route("{UUID:Guid}")]
+        public HttpResponseMessage UpdateAccount(Guid UUID, UpdateAccountDto updateAccountDto)
         {
             try
             {
@@ -80,7 +83,8 @@ namespace Application.Controllers
         }
 
         [HttpDelete]
-        public HttpResponseMessage DeleteAccount([FromUri] Guid UUID)
+        [Route("{UUID:Guid}")]
+        public HttpResponseMessage DeleteAccount(Guid UUID)
         {
             try
             {
