@@ -214,9 +214,9 @@
       <Project>{cf0abb5a-cd7b-47f6-9683-c19a0539e25a}</Project>
       <Name>Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Infraestructure\Infraestructure.csproj">
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj">
       <Project>{b5924263-368c-414d-acb2-1416c1527dfa}</Project>
-      <Name>Infraestructure</Name>
+      <Name>Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

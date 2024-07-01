@@ -2,7 +2,7 @@ using Application.App_Start;
 using AutoMapper;
 using Domain.Interfaces;
 using Domain.Services;
-using Infraestructure.Repository;
+using Infrastructure.Repository;
 using System.Web.Http;
 using Unity;
 using Unity.Injection;

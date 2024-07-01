@@ -150,10 +150,6 @@
       <Project>{cf0abb5a-cd7b-47f6-9683-c19a0539e25a}</Project>
       <Name>Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Infraestructure\Infraestructure.csproj">
-      <Project>{B5924263-368C-414D-ACB2-1416C1527DFA}</Project>
-      <Name>Infraestructure</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
