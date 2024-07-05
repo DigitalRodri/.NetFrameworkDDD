@@ -1,5 +1,7 @@
 # .NetFrameworkDDD
-DDD Project based on .Net Framework 4.8.1
+## DDD Project based on .Net Framework 4.8.1
+
+### Conversion to .NET 8 with additional features available here: https://github.com/DigitalRodri/.Net_8_DDD
 
 *Run using IIS Express and Application as Startup Project. Set Application project Start Action as "Don't open a page."*
 *Postman collection available in Postman folder.*
