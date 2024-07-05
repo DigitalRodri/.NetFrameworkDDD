@@ -1,5 +1,5 @@
-# .NetFrameworkDDD
-## DDD Project based on .Net Framework 4.8.1
+# .NETFrameworkDDD
+## DDD Project based on .NET Framework 4.8.1
 
 ### Conversion to .NET 8 with additional features available here: https://github.com/DigitalRodri/.Net_8_DDD
 
